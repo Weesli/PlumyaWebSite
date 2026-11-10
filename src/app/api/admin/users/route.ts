@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { requireAdmin } from '@/lib/auth';
+import { publishCreditUpdate } from '@/lib/redis';
 
 export async function GET() {
   const adminCheck = await requireAdmin();
@@ -55,6 +56,11 @@ export async function PUT(request: Request) {
         createdAt: true,
       },
     });
+
+    // Yönetici panelinden bakiye değiştirildiğinde oyuna anlık yansıt
+    if (typeof credits === 'number' && updatedUser.username) {
+      await publishCreditUpdate(updatedUser.username, credits, 'SET');
+    }
 
     return NextResponse.json({ success: true, user: updatedUser });
   } catch (error) {

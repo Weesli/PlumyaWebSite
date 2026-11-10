@@ -63,7 +63,7 @@ export default function RegisterPage() {
         <div className="text-center mb-6">
           <div className="w-10 h-10 rounded-lg bg-purple-950/80 border border-purple-500/30 flex items-center justify-center mx-auto mb-3">
             <img
-              src="/plumya-logo.png"
+              src="/plumya-logo.svg"
               alt="Plumya Logo"
               className="w-full h-full object-contain p-1"
             />

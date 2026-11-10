@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { verifyPaywantCallbackHash } from '@/lib/paywant';
+import { publishCreditUpdate } from '@/lib/redis';
 
 export async function POST(request: Request) {
   try {
@@ -73,6 +74,11 @@ export async function POST(request: Request) {
           },
         }),
       ]);
+
+      // Minecraft PlumCredit eklentisine Redis Pub/Sub üzerinden anlık bildirim fırlat
+      if (username) {
+        await publishCreditUpdate(username, coins, 'ADD');
+      }
 
       console.log(`✔ Paywant payment successful: +${coins} coins credited to ${username} (${userId})`);
       // Paywant expects exact string "OK" with 200 OK status

@@ -3,88 +3,95 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Copy, Check } from "lucide-react";
+import { useApp } from "@/contexts/AppContext";
 
 const quickLinks = [
   { href: "/", label: "Ana Sayfa" },
   { href: "/market", label: "Market" },
   { href: "/support", label: "Destek" },
   { href: "/about", label: "Hakkımızda" },
-  { href: "/kvkk", label: "KVKK & Sözleşme" },
 ];
 
 export default function Footer() {
+  const { settings } = useApp();
   const [copied, setCopied] = useState(false);
+  const ip = settings.serverIp || settings.serverIP || "play.plumya.net";
+  const invite = settings.discordInviteUrl || "https://discord.gg";
 
-  const copyIP = () => {
-    navigator.clipboard.writeText("play.plumya.net");
+  const copy = () => {
+    navigator.clipboard.writeText(ip);
     setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    setTimeout(() => setCopied(false), 1800);
   };
 
+  const head = "font-display text-xl font-semibold mb-4";
+  const link = "text-[var(--muted)] hover:text-[var(--ink)] transition-colors";
+
   return (
-    <footer className="relative bg-[#09090b] border-t border-white/[0.08] mt-auto">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
-          
-          {/* Brand Info */}
-          <div className="space-y-2">
-            <div className="flex items-center gap-2">
-              <div className="w-6 h-6 rounded-md bg-purple-950/80 border border-purple-500/30 flex items-center justify-center overflow-hidden">
-                <img
-                  src="/plumya-logo.png"
-                  alt="Plumya Logo"
-                  className="w-full h-full object-contain p-0.5"
-                />
-              </div>
-              <span className="font-bold text-white text-base tracking-tight">
-                Plumya Network
-              </span>
-            </div>
-            <p className="text-xs text-zinc-400 leading-relaxed max-w-sm">
-              Java &amp; Bedrock destekli Minecraft topluluk sunucusu. Dengeli ekonomi ve korumalı oyun altyapısı.
-            </p>
-          </div>
-
-          {/* Quick Links */}
-          <div className="flex flex-wrap md:justify-center gap-5">
-            {quickLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-xs font-medium text-zinc-400 hover:text-white transition-colors"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
-
-          {/* Server IP Action */}
-          <div className="flex md:justify-end">
-            <button
-              onClick={copyIP}
-              className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-xs font-mono text-zinc-300 transition-all cursor-pointer"
-            >
-              <span>play.plumya.net</span>
-              {copied ? (
-                <span className="text-emerald-400 font-sans font-medium text-[11px] flex items-center gap-1">
-                  <Check size={12} /> Kopyalandı
-                </span>
-              ) : (
-                <Copy size={12} className="text-zinc-500" />
-              )}
-            </button>
-          </div>
-
-        </div>
-
-        {/* Disclaimer & Copyright */}
-        <div className="mt-8 pt-6 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-zinc-500">
-          <p>© 2026 Plumya Network. Tüm hakları saklıdır.</p>
-          <p>
-            Plumya bağımsız bir topluluk sunucusudur. Mojang AB veya Microsoft ile resmi bir bağlantısı bulunmamaktadır.
+    <footer className="bg-[var(--surface)] overflow-hidden">
+      <div className="wrap pt-12 grid gap-8 md:grid-cols-[1.8fr_1fr_1fr_1fr]">
+        <div>
+          <h2 className={head}>Plumya Network</h2>
+          <p className="text-[var(--muted)] leading-relaxed max-w-sm">
+            Java &amp; Bedrock destekli Minecraft topluluk sunucusu. Emek veren oyuncunun karşılığını alması için dengeli
+            ekonomi, hilesiz oyun ve ilgili bir yetkili ekibi.
           </p>
         </div>
+
+        <div>
+          <h2 className={head}>Hızlı menü</h2>
+          <ul className="space-y-2.5">
+            {quickLinks.map((l) => (
+              <li key={l.href}>
+                <Link href={l.href} className={link}>
+                  {l.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <h2 className={head}>Topluluk</h2>
+          <ul className="space-y-2.5">
+            <li>
+              <a href={invite} target="_blank" rel="noreferrer" className={link}>
+                Discord
+              </a>
+            </li>
+            <li>
+              <button onClick={copy} className={`${link} flex items-center gap-2 cursor-pointer`}>
+                {ip}
+                {copied ? <Check size={14} className="text-[var(--grass)]" /> : <Copy size={14} />}
+              </button>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 className={head}>Bağlantılar</h2>
+          <ul className="space-y-2.5">
+            <li>
+              <Link href="/kvkk" className={link}>
+                KVKK &amp; Sözleşme
+              </Link>
+            </li>
+          </ul>
+        </div>
       </div>
+
+      <div className="wrap mt-10 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-sm text-[var(--muted)]">
+        <p>© 2026 Plumya Network. Tüm hakları saklıdır.</p>
+        <p>Mojang AB veya Microsoft ile resmi bir bağlantısı yoktur.</p>
+      </div>
+
+      <p
+        aria-hidden="true"
+        className="font-display text-center font-semibold leading-none text-[var(--surface-3)] select-none mt-6 pb-4"
+        style={{ fontSize: "clamp(40px, 7vw, 88px)" }}
+      >
+        plumya
+      </p>
     </footer>
   );
 }

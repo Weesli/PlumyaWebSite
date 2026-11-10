@@ -1,183 +1,263 @@
 @import "tailwindcss";
 
+/*
+  Plumya "Erik Gecesi" theme.
+  One ground (plum night), one ink, one accent (coral), lantern yellow for
+  small warm lights. Surfaces step in tone; no gradients, glows or shadows.
+  The older purple/zinc utility colours on inner pages are remapped below so
+  every page picks up the palette without being rewritten.
+*/
+
 :root {
-  /* Neutral obsidian/slate dark theme (Taste Skill: 90-95% neutral) */
-  --background: #09090b;
-  --foreground: #f4f4f5;
-  --surface: #121217;
-  --surface-hover: #181820;
-  --surface-light: #1f1f2a;
-  --border: rgba(255, 255, 255, 0.08);
-  --border-purple: rgba(147, 51, 234, 0.22);
-  --text: #f4f4f5;
-  --text-main: #f4f4f5;
-  --text-muted: #a1a1aa;
-  
-  /* Restrained accent (Plum / Royal Violet) */
-  --primary: #8b5cf6;
-  --primary-hover: #7c3aed;
-  --primary-light: #a78bfa;
-  --accent: #c084fc;
-  --plum-highlight: #e879f9;
-  --plum-accent: #a855f7;
-  
-  --success: #10b981;
-  --warning: #f59e0b;
-  --danger: #ef4444;
-  --dark-bg: #09090b;
-  --dark-bg-alt: #0e0e13;
+  --bg: #130c17;
+  --surface: #1c1223;
+  --surface-2: #271a31;
+  --surface-3: #35243f;
+  --ink: #f6edf3;
+  --muted: #ab97b4;
+  --accent: #ff6b8f;
+  --accent-hover: #ff85a3;
+  --accent-ink: #1a0a10;
+  --blossom: #ffb3c7;
+  --lantern: #ffc15e;
+  --grass: #8fd16a;
+  --danger: #ff7b6b;
 
-  /* Aliases */
-  --color-surface: #121217;
-  --color-surface-hover: #181820;
-  --color-surface-light: #1f1f2a;
-  --color-border: rgba(255, 255, 255, 0.08);
-  --color-border-purple: rgba(147, 51, 234, 0.22);
-  --color-text: #f4f4f5;
-  --color-text-main: #f4f4f5;
-  --color-text-muted: #a1a1aa;
-  --color-primary: #8b5cf6;
-  --color-primary-light: #a78bfa;
-  --color-accent: #c084fc;
-  --color-plum-highlight: #e879f9;
-  --color-plum-accent: #a855f7;
-  --color-dark-bg: #09090b;
-  --color-dark-bg-alt: #0e0e13;
+  --background: var(--bg);
+  --foreground: var(--ink);
+  --surface-hover: var(--surface-2);
+  --surface-light: var(--surface-2);
+  --border: transparent;
+  --border-purple: transparent;
+  --text: var(--ink);
+  --text-main: var(--ink);
+  --text-muted: var(--muted);
+  --primary: var(--accent);
+  --primary-hover: var(--accent-hover);
+  --primary-light: var(--blossom);
+  --plum-highlight: var(--blossom);
+  --plum-accent: var(--accent);
+  --success: var(--grass);
+  --warning: var(--lantern);
+  --dark-bg: var(--bg);
+  --dark-bg-alt: var(--surface);
 }
 
-@theme inline {
-  --color-plum-50: #faf5ff;
-  --color-plum-100: #f3e8ff;
-  --color-plum-200: #e9d5ff;
-  --color-plum-300: #d8b4fe;
-  --color-plum-400: #c084fc;
-  --color-plum-500: #a855f7;
-  --color-plum-600: #9333ea;
-  --color-plum-700: #7e22ce;
-  --color-plum-800: #6b21a8;
-  --color-plum-900: #581c87;
-  --color-plum-950: #3b0764;
-  
-  --color-surface: #121217;
-  --color-surface-hover: #181820;
-  --color-surface-light: #1f1f2a;
-  --color-dark-bg: #09090b;
-  --color-dark-bg-alt: #0e0e13;
-  --color-border-purple: rgba(147, 51, 234, 0.22);
-  --color-text-main: #f4f4f5;
-  --color-text-muted: #a1a1aa;
-  --color-plum-accent: #a855f7;
+@theme {
+  --font-sans: var(--font-body), "Segoe UI", system-ui, sans-serif;
 
-  --font-sans: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  --radius-xs: 0;
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+  --radius-xl: 0;
+  --radius-2xl: 0;
+  --radius-3xl: 0;
+
+  --color-zinc-50: #f8f1f6;
+  --color-zinc-100: #f0e5ee;
+  --color-zinc-200: #e2d3df;
+  --color-zinc-300: #cdb9c9;
+  --color-zinc-400: #ab97b4;
+  --color-zinc-500: #8a7794;
+  --color-zinc-600: #5f4e69;
+  --color-zinc-700: #43344d;
+  --color-zinc-800: #2c2036;
+  --color-zinc-900: #1c1223;
+  --color-zinc-950: #130c17;
+
+  --color-purple-50: #fff0f4;
+  --color-purple-100: #ffdde6;
+  --color-purple-200: #ffbccd;
+  --color-purple-300: #ff94ae;
+  --color-purple-400: #ff7a9c;
+  --color-purple-500: #ff6b8f;
+  --color-purple-600: #e04e74;
+  --color-purple-700: #b83a5c;
+  --color-purple-800: #8a2c46;
+  --color-purple-900: #5e1f31;
+  --color-purple-950: #3b1220;
+  --color-violet-300: #ff94ae;
+  --color-violet-400: #ff7a9c;
+  --color-violet-500: #ff6b8f;
+  --color-violet-600: #e04e74;
+  --color-fuchsia-400: #ff7a9c;
+  --color-fuchsia-500: #ff6b8f;
+
+  --color-plum-50: #fff0f4;
+  --color-plum-100: #ffdde6;
+  --color-plum-200: #ffbccd;
+  --color-plum-300: #ff94ae;
+  --color-plum-400: #ff7a9c;
+  --color-plum-500: #ff6b8f;
+  --color-plum-600: #e04e74;
+  --color-plum-700: #b83a5c;
+  --color-plum-800: #8a2c46;
+  --color-plum-900: #5e1f31;
+  --color-plum-950: #3b1220;
+
+  --color-surface: #1c1223;
+  --color-surface-hover: #271a31;
+  --color-surface-light: #271a31;
+  --color-dark-bg: #130c17;
+  --color-dark-bg-alt: #1c1223;
+  --color-border-purple: transparent;
+  --color-text-main: #f6edf3;
+  --color-text-muted: #ab97b4;
+  --color-plum-accent: #ff6b8f;
 }
+
+html { scroll-behavior: smooth; }
 
 body {
-  background-color: #09090b;
-  background-image: 
-    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(124, 58, 237, 0.15), transparent 70%),
-    radial-gradient(circle at 50% 100%, rgba(88, 28, 135, 0.08), transparent 60%);
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-  color: var(--text-main);
+  background: var(--bg);
+  color: var(--ink);
   font-family: var(--font-sans);
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Studio-Grade Structural Panels (Figma / Linear / x.ai level) */
-.glass-panel {
-  background: #111116;
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5), inset 0 1px 0 0 rgba(255, 255, 255, 0.04);
+.wrap {
+  width: 100%;
+  max-width: 1160px;
+  margin-inline: auto;
+  padding-inline: 20px;
 }
 
+/* ---------- Surfaces: tone steps only ---------- */
+.glass-panel,
+.panel {
+  background: var(--surface);
+  border: 0;
+  box-shadow: none;
+}
 .glass-panel-hover {
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, background 0.2s ease;
+  transition: background-color 0.18s ease, transform 0.18s cubic-bezier(0.16, 1, 0.3, 1);
 }
-
 .glass-panel-hover:hover {
-  background: #15151c;
-  border-color: rgba(168, 85, 247, 0.25);
+  background: var(--surface-2);
   transform: translateY(-2px);
 }
-
-/* Crisp Typographic Heading */
-.gradient-title {
-  background: linear-gradient(180deg, #ffffff 30%, #d4d4d8 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
+.gradient-title,
 .gradient-title-plum {
-  background: linear-gradient(135deg, #ffffff 40%, #e9d5ff 75%, #c084fc 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  color: var(--ink);
 }
 
-/* Tactile, High-Craft Buttons (Rule 5: button step & press, solid action) */
-.gradient-btn {
-  background: #7c3aed;
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 2px 8px -1px rgba(124, 58, 237, 0.35), inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
-  transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+/* ---------- Pixel notch: stepped corners, like a block's silhouette ---------- */
+.notch {
+  clip-path: polygon(0 4px, 4px 4px, 4px 0, calc(100% - 4px) 0, calc(100% - 4px) 4px, 100% 4px, 100% calc(100% - 4px), calc(100% - 4px) calc(100% - 4px), calc(100% - 4px) 100%, 4px 100%, 4px calc(100% - 4px), 0 calc(100% - 4px));
+}
+.notch-lg {
+  clip-path: polygon(0 8px, 8px 8px, 8px 0, calc(100% - 8px) 0, calc(100% - 8px) 8px, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 8px calc(100% - 8px), 0 calc(100% - 8px));
 }
 
-.gradient-btn:hover {
-  background: #6d28d9;
-  box-shadow: 0 4px 14px -1px rgba(124, 58, 237, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.25);
-  transform: translateY(-1px);
-}
-
-.gradient-btn:active {
-  background: #5b21b6;
-  transform: translateY(1px);
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
-}
-
-/* Secondary Button */
+/* ---------- Buttons: chunky blocks. The thick bottom edge is the block's side; pressing sinks it. ---------- */
+.gradient-btn,
+.btn-primary,
+.btn-accent,
+.btn-soft,
 .btn-secondary {
-  background: rgba(255, 255, 255, 0.04);
-  color: #e4e4e7;
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  border: 0;
+  border-bottom: 5px solid;
+  box-shadow: none;
+  clip-path: polygon(0 4px, 4px 4px, 4px 0, calc(100% - 4px) 0, calc(100% - 4px) 4px, 100% 4px, 100% 100%, 0 100%);
+  transition: background-color 0.12s ease, transform 0.08s ease, border-bottom-width 0.08s ease;
 }
-
-.btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.08);
-  color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.16);
-  transform: translateY(-1px);
+.gradient-btn,
+.btn-primary,
+.btn-accent {
+  background: var(--accent);
+  border-bottom-color: #b83a5c;
+  color: var(--accent-ink);
 }
-
+.btn-soft,
+.btn-secondary {
+  background: var(--surface-3);
+  border-bottom-color: #1d1226;
+  color: var(--ink);
+}
+.gradient-btn:hover,
+.btn-primary:hover,
+.btn-accent:hover { background: var(--accent-hover); }
+.btn-soft:hover,
+.btn-secondary:hover { background: #43304f; }
+.gradient-btn:active,
+.btn-primary:active,
+.btn-accent:active,
+.btn-soft:active,
 .btn-secondary:active {
-  background: rgba(255, 255, 255, 0.03);
-  transform: translateY(1px);
+  transform: translateY(3px);
+  border-bottom-width: 2px;
 }
 
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+h1, h2, h3, .font-display {
+  font-family: var(--font-display);
 }
 
-::-webkit-scrollbar-track {
-  background: #09090b;
+:focus-visible {
+  outline: 2px solid var(--lantern);
+  outline-offset: 2px;
 }
 
-::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 3px;
+.px-scene {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(168, 85, 247, 0.4);
+/* ---------- Motion ---------- */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: none; }
+}
+.rise { animation: rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.rise-2 { animation-delay: 0.08s; }
+.rise-3 { animation-delay: 0.16s; }
+.rise-4 { animation-delay: 0.24s; }
+
+@keyframes petal {
+  0% { transform: translate(0, -4px); opacity: 0; }
+  10% { opacity: 1; }
+  100% { transform: translate(-14px, 46px); opacity: 0; }
+}
+.petal { animation: petal 9s linear infinite; }
+
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  45% { opacity: 0.55; }
+  60% { opacity: 0.9; }
+}
+.flicker { animation: flicker 3s ease-in-out infinite; }
+
+@keyframes drift {
+  from { transform: translateX(-4%); }
+  to { transform: translateX(4%); }
+}
+.drift { animation: drift 50s ease-in-out infinite alternate; }
+
+/* in-view reveal, driven by a tiny observer in the page */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+.reveal.in { opacity: 1; transform: none; }
+.no-js .reveal { opacity: 1; transform: none; }
+
+details > summary { list-style: none; }
+details > summary::-webkit-details-marker { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .rise, .petal, .flicker, .drift { animation: none; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  html { scroll-behavior: auto; }
+  * { transition-duration: 0.01ms !important; }
 }
 
-/* Selection */
-::selection {
-  background: rgba(147, 51, 234, 0.4);
-  color: #ffffff;
-}
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--surface-3); }
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+::selection { background: var(--accent); color: var(--accent-ink); }

@@ -1,18 +1,18 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Pixelify_Sans, Figtree } from "next/font/google";
 import "./globals.css";
 import { AppProvider } from "@/contexts/AppContext";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+const display = Pixelify_Sans({
+  variable: "--font-display",
+  subsets: ["latin", "latin-ext"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const body = Figtree({
+  variable: "--font-body",
+  subsets: ["latin", "latin-ext"],
 });
 
 export const metadata: Metadata = {
@@ -20,17 +20,13 @@ export const metadata: Metadata = {
   description: "Plumya Minecraft Network — 1.20+ Java & Bedrock destekli emek Survival ve SkyBlock topluluk sunucusu.",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="tr" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-[var(--dark-bg)]">
+    <html lang="tr" className={`${display.variable} ${body.variable} h-full antialiased`}>
+      <body className="min-h-full flex flex-col">
         <AppProvider>
           <Navbar />
-          <main className="flex-1 pt-16">{children}</main>
+          <main className="flex-1">{children}</main>
           <Footer />
         </AppProvider>
       </body>

@@ -124,6 +124,12 @@ model SiteSettings {
   serverPort              String   @default("25565")
   maxPlayers              Int      @default(200)
   onlinePlayers           Int      @default(47)
+  siteName                String   @default("Plumya Network")
+  backgroundImage         String   @default("/plumya-dusk.webp")
+  panelOpacity            Int      @default(65)
+  showNews                Boolean  @default(true)
+  discordServerId         String   @default("")
+  discordInviteUrl        String   @default("")
   updatedAt               DateTime @updatedAt
 
   @@map("site_settings")

@@ -16,21 +16,8 @@ const Avatar = ({ name }: { name: string }) => (
   />
 );
 
-function Column({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <div className="notch bg-[var(--surface-2)] p-6 min-h-[320px] flex flex-col">
-      <h3 className="text-xl font-extrabold mb-5">{title}</h3>
-      {children}
-    </div>
-  );
-}
-
 export default function Supporters() {
-  const { creditLoads, coinPackages } = useApp();
-
-  const totals = new Map<string, number>();
-  creditLoads.forEach((l) => totals.set(l.username, (totals.get(l.username) || 0) + l.amount));
-  const lords = [...totals.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5);
+  const { creditLoads, coinPackages, topSupporters } = useApp();
 
   const recent = [...creditLoads]
     .sort((a, b) => new Date(b.date || b.createdAt || 0).getTime() - new Date(a.date || a.createdAt || 0).getTime())
@@ -38,18 +25,19 @@ export default function Supporters() {
 
   const packs = coinPackages.slice(0, 5);
 
-  const empty = "text-[var(--muted)] my-auto text-center";
+  const empty = "text-[var(--muted)] py-3";
   const row = "flex items-center gap-3 py-2.5";
 
   return (
-    <div className="grid gap-3 md:grid-cols-3">
-      <Column title="En çok destek verenler">
-        {lords.length === 0 ? (
+    <div className="grid gap-y-10 lg:grid-cols-12 lg:gap-x-6">
+      <section className="plumya-panel plumya-reading-panel min-w-0 self-start lg:col-span-6">
+        <h3 className="text-2xl mb-4">En çok destek verenler</h3>
+        {topSupporters.length === 0 ? (
           <p className={empty}>Henüz kimse destek vermedi.</p>
         ) : (
-          <ol>
-            {lords.map(([name, total], i) => (
-              <li key={name} className={row}>
+          <ol className="divide-y divide-white/12">
+            {topSupporters.map(({ username: name, amount: total }, i) => (
+              <li key={name} className={`${row} ${i === 0 ? "bg-[var(--accent)]/10 px-2" : "px-2"}`}>
                 <span className="w-6 font-display text-3xl font-semibold text-[var(--accent)] tabular-nums">{i + 1}</span>
                 <Avatar name={name} />
                 <span className="flex-1 min-w-0 font-bold truncate">{name}</span>
@@ -58,9 +46,10 @@ export default function Supporters() {
             ))}
           </ol>
         )}
-      </Column>
+      </section>
 
-      <Column title="Son bağışlar">
+      <section className="plumya-panel plumya-reading-panel min-w-0 self-start lg:col-span-4 lg:col-start-9 lg:mt-20">
+        <h3 className="text-xl mb-2">Son bağışlar</h3>
         {recent.length === 0 ? (
           <p className={empty}>Henüz bağış yok.</p>
         ) : (
@@ -79,15 +68,19 @@ export default function Supporters() {
             ))}
           </ul>
         )}
-      </Column>
+      </section>
 
-      <Column title="Mağaza paketleri">
+      <section className="plumya-panel plumya-reading-panel min-w-0 self-start lg:col-span-8 lg:col-start-3">
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
+          <h3 className="text-xl">Mağaza paketleri</h3>
+          <Link href="/market" className="py-2 text-sm font-bold text-[var(--accent)] hover:underline">Markete git</Link>
+        </div>
         {packs.length === 0 ? (
           <p className={empty}>Mağazada ürün yok.</p>
         ) : (
-          <ul>
+          <ul className="grid grid-cols-1 gap-x-6 sm:grid-cols-2 xl:grid-cols-5">
             {packs.map((p) => (
-              <li key={p.id} className={row}>
+              <li key={p.id} className={`${row} border-t border-white/25`}>
                 <span className="flex-1 min-w-0">
                   <span className="block font-bold truncate">{p.name}</span>
                   <span className="block text-xs text-[var(--muted)]">{p.coins.toLocaleString("tr-TR")} kredi</span>
@@ -97,10 +90,7 @@ export default function Supporters() {
             ))}
           </ul>
         )}
-        <Link href="/market" className="btn-accent mt-auto self-start px-5 h-11 flex items-center text-sm">
-          Markete git
-        </Link>
-      </Column>
+      </section>
     </div>
   );
 }

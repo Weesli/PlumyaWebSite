@@ -40,7 +40,10 @@ export async function PUT(request: Request) {
     if (role && ['user', 'admin', 'moderator'].includes(role)) {
       updateData.role = role;
     }
-    if (typeof credits === 'number') {
+    if (credits !== undefined) {
+      if (!Number.isInteger(credits) || credits < 0 || credits > 2147483647) {
+        return NextResponse.json({ error: 'Geçerli bir kredi bakiyesi girin.' }, { status: 400 });
+      }
       updateData.credits = credits;
     }
 
@@ -58,8 +61,8 @@ export async function PUT(request: Request) {
     });
 
     // Yönetici panelinden bakiye değiştirildiğinde oyuna anlık yansıt
-    if (typeof credits === 'number' && updatedUser.username) {
-      await publishCreditUpdate(updatedUser.username, credits, 'SET');
+    if (updateData.credits !== undefined) {
+      await publishCreditUpdate(updatedUser.username, updatedUser.credits, 'SET');
     }
 
     return NextResponse.json({ success: true, user: updatedUser });

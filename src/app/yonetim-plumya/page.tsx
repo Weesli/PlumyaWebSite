@@ -4,6 +4,8 @@ import { useApp } from "@/contexts/AppContext";
 import { useState, useEffect } from "react";
 import {
   Settings,
+  LayoutDashboard,
+  ArrowUpRight,
   Users,
   Newspaper,
   MessageSquare,
@@ -19,16 +21,19 @@ import {
   RefreshCw,
 } from "lucide-react";
 import Link from "next/link";
+import type { User } from "@/lib/types";
+import AdminPackages from "@/components/AdminPackages";
 
-type Tab = "settings" | "users" | "news" | "tickets";
+type Tab = "overview" | "packages" | "settings" | "users" | "news" | "tickets";
 
 export default function SecureAdminPage() {
   const {
     currentUser,
     settings,
-    users,
     news,
     tickets,
+    coinPackages,
+    loading,
     updateSettings,
     deleteUser,
     updateUser,
@@ -39,7 +44,26 @@ export default function SecureAdminPage() {
     refreshData,
   } = useApp();
 
-  const [activeTab, setActiveTab] = useState<Tab>("settings");
+  const [activeTab, setActiveTab] = useState<Tab>("overview");
+  const [users, setUsers] = useState<User[]>([]);
+  const [usersError, setUsersError] = useState("");
+
+  const loadUsers = async (signal?: AbortSignal) => {
+    const response = await fetch("/api/admin/users", { signal });
+    if (!response.ok) throw new Error("Kullanıcılar yüklenemedi.");
+    setUsers((await response.json()).users);
+    setUsersError("");
+  };
+
+  const isAdmin = currentUser?.role === "admin";
+  useEffect(() => {
+    if (!isAdmin || activeTab !== "users") return;
+    const request = new AbortController();
+    loadUsers(request.signal).catch(() => {
+      if (!request.signal.aborted) setUsersError("Kullanıcılar yüklenemedi.");
+    });
+    return () => request.abort();
+  }, [activeTab, isAdmin]);
 
   // Settings state
   const [announcement, setAnnouncement] = useState(settings.announcement);
@@ -50,11 +74,22 @@ export default function SecureAdminPage() {
   const [showRecentCredits, setShowRecentCredits] = useState(settings.showRecentCredits);
   const [discordServerId, setDiscordServerId] = useState(settings.discordServerId || "");
   const [discordInviteUrl, setDiscordInviteUrl] = useState(settings.discordInviteUrl || "");
+  const [siteName, setSiteName] = useState("Plumya Network");
+  const [backgroundImage, setBackgroundImage] = useState("");
+  const [panelOpacity, setPanelOpacity] = useState(65);
+  const [showNews, setShowNews] = useState(true);
+  const [serverPort, setServerPort] = useState("25565");
+  const [settingsError, setSettingsError] = useState("");
   const [settingsSaved, setSettingsSaved] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Sync with current settings when loaded
   useEffect(() => {
+    setSiteName(settings.siteName || "Plumya Network");
+    setBackgroundImage(settings.backgroundImage || "");
+    setPanelOpacity(settings.panelOpacity ?? 65);
+    setShowNews(settings.showNews !== false);
+    setServerPort(settings.serverPort || "25565");
     setAnnouncement(settings.announcement);
     setServerIP(settings.serverIp || settings.serverIP || "play.plumya.net");
     setOnlinePlayers(settings.onlinePlayers);
@@ -71,6 +106,8 @@ export default function SecureAdminPage() {
 
   // Ticket reply
   const [replyTexts, setReplyTexts] = useState<Record<string, string>>({});
+
+  if (loading) return <p className="wrap py-12" role="status">Yönetim paneli yükleniyor…</p>;
 
   if (!currentUser || currentUser.role !== "admin") {
     return (
@@ -97,7 +134,9 @@ export default function SecureAdminPage() {
   }
 
   const tabs: { id: Tab; label: string; icon: React.ElementType }[] = [
-    { id: "settings", label: "Genel Ayarlar", icon: Settings },
+    { id: "overview", label: "Genel Bakış", icon: LayoutDashboard },
+    { id: "settings", label: "Site Ayarları", icon: Settings },
+    { id: "packages", label: "Mağaza", icon: Sparkles },
     { id: "users", label: "Kullanıcılar", icon: Users },
     { id: "news", label: "Haberler", icon: Newspaper },
     { id: "tickets", label: "Destek Talepleri", icon: MessageSquare },
@@ -105,8 +144,11 @@ export default function SecureAdminPage() {
 
   const handleSaveSettings = async () => {
     setIsSubmitting(true);
+    setSettingsError("");
+    setSettingsSaved(false);
     try {
       await updateSettings({
+        siteName, backgroundImage, panelOpacity, showNews, serverPort,
         announcement,
         serverIp: serverIP,
         serverIP,
@@ -118,146 +160,57 @@ export default function SecureAdminPage() {
         discordInviteUrl,
       });
 
-      // Also call direct backend API
-      await fetch('/api/admin/settings', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          announcement,
-          serverIp: serverIP,
-          onlinePlayers,
-          maxPlayers,
-          showRecentRegistrations,
-          showRecentCredits,
-          discordServerId,
-          discordInviteUrl,
-        }),
-      });
-
       setSettingsSaved(true);
       setTimeout(() => setSettingsSaved(false), 2500);
     } catch (e) {
-      console.error(e);
+      setSettingsError(e instanceof Error ? e.message : "Ayarlar kaydedilemedi.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const handleAddNews = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!newsTitle.trim() || !newsContent.trim()) return;
-
-    const now = new Date().toISOString();
-    addNews({
-      title: newsTitle.trim(),
-      content: newsContent.trim(),
-      author: currentUser.username,
-      date: now,
-      createdAt: now,
-    });
-
+  const runAdminAction = async (action: () => void | Promise<void>) => {
     try {
-      await fetch('/api/admin/news', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          title: newsTitle.trim(),
-          content: newsContent.trim(),
-        }),
-      });
-      refreshData();
-    } catch (err) {
-      console.error(err);
+      await action();
+      return true;
+    } catch (error) {
+      alert(error instanceof Error ? error.message : "İşlem tamamlanamadı.");
+      return false;
     }
+  };
 
-    setNewsTitle("");
-    setNewsContent("");
+  const handleAddNews = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (!newsTitle.trim() || !newsContent.trim()) return;
+    const date = new Date().toISOString();
+    const saved = await runAdminAction(() => addNews({
+      title: newsTitle.trim(), content: newsContent.trim(), author: currentUser.username, date, createdAt: date,
+    }));
+    if (saved) {
+      setNewsTitle("");
+      setNewsContent("");
+    }
   };
 
   const handleDeleteNews = async (id: string) => {
-    if (!confirm("Bu haberi kalıcı olarak silmek istediğinizden emin misiniz?")) return;
-    deleteNews(id);
-    try {
-      await fetch(`/api/admin/news?id=${id}`, { method: 'DELETE' });
-      refreshData();
-    } catch (e) {
-      console.error(e);
+    if (confirm("Bu haberi kalıcı olarak silmek istediğinizden emin misiniz?")) {
+      await runAdminAction(() => deleteNews(id));
     }
   };
 
-  const handleTicketReply = async (ticketId: string) => {
-    const text = replyTexts[ticketId];
-    if (!text?.trim()) return;
-
-    addTicketReply(ticketId, text.trim());
-    try {
-      await fetch(`/api/tickets/${ticketId}/reply`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text.trim() }),
-      });
-      refreshData();
-    } catch (e) {
-      console.error(e);
-    }
-
-    setReplyTexts((prev) => ({ ...prev, [ticketId]: "" }));
-  };
-
-  const handleStatusChange = async (ticketId: string, status: string) => {
-    updateTicketStatus(ticketId, status);
-    try {
-      await fetch('/api/admin/tickets', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: ticketId, status }),
-      });
-      refreshData();
-    } catch (e) {
-      console.error(e);
+  const handleTicketReply = async (id: string) => {
+    const text = replyTexts[id]?.trim();
+    if (text && await runAdminAction(() => addTicketReply(id, text))) {
+      setReplyTexts((previous) => ({ ...previous, [id]: "" }));
     }
   };
 
-  const handleUserRoleChange = async (userId: string, role: string) => {
-    updateUser(userId, { role: role as any });
-    try {
-      await fetch('/api/admin/users', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: userId, role }),
-      });
-      refreshData();
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  const handleUserCreditsChange = async (userId: string, credits: number) => {
-    updateUser(userId, { credits });
-    try {
-      await fetch('/api/admin/users', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: userId, credits }),
-      });
-      refreshData();
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  const handleDeleteUser = async (userId: string) => {
-    if (userId === currentUser.id) {
-      alert("Kendi hesabınızı silemezsiniz.");
-      return;
-    }
-    if (!confirm("Bu kullanıcıyı silmek istediğinizden emin misiniz? Tüm verileri silinecektir.")) return;
-    deleteUser(userId);
-    try {
-      await fetch(`/api/admin/users?id=${userId}`, { method: 'DELETE' });
-      refreshData();
-    } catch (e) {
-      console.error(e);
+  const handleStatusChange = (id: string, status: string) => runAdminAction(() => updateTicketStatus(id, status));
+  const handleUserRoleChange = (id: string, role: string) => runAdminAction(async () => { await updateUser(id, { role: role === "admin" || role === "moderator" ? role : "user" }); await loadUsers(); });
+  const handleUserCreditsChange = (id: string, credits: number) => runAdminAction(async () => { await updateUser(id, { credits }); await loadUsers(); });
+  const handleDeleteUser = async (id: string) => {
+    if (id !== currentUser.id && confirm("Bu kullanıcıyı silmek istediğinizden emin misiniz? Tüm verileri silinecektir.")) {
+      await runAdminAction(async () => { await deleteUser(id); await loadUsers(); });
     }
   };
 
@@ -279,72 +232,77 @@ export default function SecureAdminPage() {
     );
   };
 
+  const activeLabel = tabs.find((tab) => tab.id === activeTab)?.label;
+  const overview = [
+    { tab: "tickets", label: "Açık destek talebi", value: tickets.filter((ticket) => ticket.status === "open").length },
+    { tab: "news", label: "Son haberler", value: news.length },
+    { tab: "packages", label: "Aktif mağaza paketi", value: coinPackages.length },
+  ] as const;
+
   return (
-    <div className="min-h-screen py-10 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
-        {/* Admin Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 pb-6 border-b border-white/[0.08]">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-purple-400">
-              <ShieldCheck size={20} />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h1 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
-                  Plumya Yönetim Merkezi
-                </h1>
-                <span className="text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center gap-1">
-                  <ShieldCheck size={10} /> Yetkili
-                </span>
-              </div>
-              <p className="text-xs text-zinc-400 mt-0.5">
-                Hoş geldin, <strong className="text-zinc-200">{currentUser.username}</strong>. Sunucu ve oyuncu yönetim paneli.
-              </p>
-            </div>
+    <div className="min-h-dvh bg-[var(--bg)] lg:grid lg:grid-cols-[232px_minmax(0,1fr)]">
+      <aside className="bg-[var(--surface)] border-b lg:border-b-0 lg:border-r border-white/10 lg:sticky lg:top-0 lg:h-dvh flex flex-col">
+        <div className="flex items-center gap-3 px-5 py-5 lg:py-7">
+          <ShieldCheck size={22} className="shrink-0 text-[var(--accent)]" />
+          <div className="min-w-0">
+            <p className="truncate font-display text-xl text-[var(--blossom)]">{settings.siteName || "Plumya Network"}</p>
+            <p className="text-xs text-[var(--muted)]">Yönetim merkezi</p>
           </div>
-
-          <div className="flex items-center gap-2">
+          <Link href="/" className="ml-auto lg:hidden p-2" aria-label="Siteye dön"><ArrowUpRight size={18} /></Link>
+        </div>
+        <nav aria-label="Yönetim menüsü" className="flex overflow-x-auto lg:flex-col lg:overflow-visible gap-1 px-3 pb-3">
+          {tabs.map(({ id, label, icon: Icon }) => (
             <button
-              onClick={() => refreshData()}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-xs font-medium text-zinc-300 border border-white/[0.08] transition-all cursor-pointer"
+              type="button"
+              key={id}
+              aria-current={activeTab === id ? "page" : undefined}
+              onClick={() => setActiveTab(id)}
+              className={`flex shrink-0 items-center gap-3 px-3 py-3 text-left text-sm font-semibold cursor-pointer border-l-2 ${activeTab === id ? "border-[var(--accent)] bg-[var(--surface-2)] text-[var(--ink)]" : "border-transparent text-[var(--muted)] hover:bg-[var(--surface-2)] hover:text-[var(--ink)]"}`}
             >
-              <RefreshCw size={12} />
-              Yenile
+              <Icon size={17} aria-hidden="true" />
+              {label}
             </button>
-            <Link
-              href="/"
-              className="px-3.5 py-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-xs font-medium text-zinc-300 border border-white/[0.08] transition-all"
-            >
-              ← Siteye Dön
-            </Link>
-          </div>
+          ))}
+        </nav>
+        <div className="hidden lg:block mt-auto border-t border-white/10 p-5">
+          <p className="truncate text-sm font-bold">{currentUser.username}</p>
+          <p className="text-xs text-[var(--muted)]">Yönetici</p>
+          <Link href="/" className="mt-4 inline-flex items-center gap-2 text-sm text-[var(--accent)] hover:underline">Siteye dön <ArrowUpRight size={15} /></Link>
         </div>
+      </aside>
 
-        {/* Tab Navigation */}
-        <div className="flex flex-wrap gap-1.5 mb-8 p-1 rounded-xl bg-white/[0.03] border border-white/[0.08] max-w-2xl">
-          {tabs.map((tab) => {
-            const Icon = tab.icon;
-            const active = activeTab === tab.id;
-            return (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`flex-1 flex items-center justify-center gap-2 py-2 px-3.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${
-                  active
-                    ? "bg-white/[0.08] text-white border border-white/[0.1] shadow-xs"
-                    : "text-zinc-400 hover:text-white hover:bg-white/[0.03]"
-                }`}
-              >
-                <Icon size={14} className={active ? "text-purple-400" : "text-zinc-500"} />
-                <span>{tab.label}</span>
-              </button>
-            );
-          })}
-        </div>
+      <div className="min-w-0">
+        <header className="border-b border-white/10 px-4 sm:px-8 py-4 flex items-center justify-between gap-3">
+          <p className="text-sm text-[var(--muted)]">Yönetim <span aria-hidden="true" className="mx-2">/</span> <strong className="text-[var(--ink)]">{activeLabel}</strong></p>
+          <button type="button" onClick={() => { void refreshData(); if (activeTab === "users") void runAdminAction(loadUsers); }} className="inline-flex items-center gap-2 border border-white/15 px-3 py-2 text-sm hover:bg-[var(--surface-2)] cursor-pointer">
+            <RefreshCw size={14} aria-hidden="true" /> Yenile
+          </button>
+        </header>
+        <div className="mx-auto max-w-7xl p-4 sm:p-8">
+          <h1 className="mb-6 text-3xl sm:text-4xl text-[var(--blossom)]">{activeLabel}</h1>
+          {activeTab === "overview" && (
+            <>
+              <p className="mb-6 text-[var(--muted)]">Hoş geldin, {currentUser.username}. Buradan sunucunun içeriğini ve oyuncu işlemlerini yönetebilirsin.</p>
+              <dl className="grid gap-px border border-white/10 bg-white/10 sm:grid-cols-3">
+                {overview.map(({ tab, label, value }) => (
+                  <div key={tab} className="bg-[var(--surface)] p-5">
+                    <dt className="text-sm text-[var(--muted)]">{label}</dt>
+                    <dd className="my-2 text-3xl font-semibold tabular-nums text-[var(--accent)]">{value}</dd>
+                    <button type="button" onClick={() => setActiveTab(tab)} className="text-sm text-[var(--accent)] hover:underline cursor-pointer">Bölümü aç</button>
+                  </div>
+                ))}
+              </dl>
+              <section className="mt-8 border-t border-white/10 pt-5">
+                <h2 className="text-xl mb-3 text-[var(--blossom)]">Sunucu bağlantısı</h2>
+                <p className="text-[var(--muted)] break-all">{settings.serverIp}:{settings.serverPort} · {settings.maxPlayers} oyuncu kapasitesi</p>
+                <button type="button" onClick={() => setActiveTab("settings")} className="mt-3 text-sm text-[var(--accent)] hover:underline cursor-pointer">Site ayarlarını aç</button>
+              </section>
+            </>
+          )}
 
         {/* ── TAB 1: GENEL AYARLAR ────────────────────────────────────────── */}
         {activeTab === "settings" && (
-          <div className="glass-panel rounded-3xl p-6 md:p-8 max-w-3xl border border-purple-500/25">
+          <div className="glass-panel rounded-3xl p-5 md:p-8 border border-purple-500/25">
             <div className="flex items-center justify-between mb-6 pb-4 border-b border-purple-500/15">
               <div>
                 <h2 className="text-lg font-bold text-white">Sunucu & Site Ayarları</h2>
@@ -354,6 +312,28 @@ export default function SecureAdminPage() {
             </div>
 
             <div className="space-y-6">
+              <div className="grid gap-4 sm:grid-cols-2">
+                <label className="grid gap-2 text-sm">
+                  Site başlığı
+                  <input className="bg-black/40 border border-white/20 p-2" value={siteName} maxLength={80} onChange={(event) => setSiteName(event.target.value)} />
+                </label>
+                <label className="grid gap-2 text-sm">
+                  Arka plan görseli (HTTPS adresi)
+                  <input className="bg-black/40 border border-white/20 p-2" value={backgroundImage} onChange={(event) => setBackgroundImage(event.target.value)} />
+                </label>
+                <label className="grid gap-2 text-sm">
+                  Panel opaklığı (%{panelOpacity})
+                  <input type="range" min="0" max="100" value={panelOpacity} onChange={(event) => setPanelOpacity(Number(event.target.value))} />
+                </label>
+                <label className="grid gap-2 text-sm">
+                  Sunucu portu
+                  <input className="bg-black/40 border border-white/20 p-2" inputMode="numeric" value={serverPort} maxLength={5} onChange={(event) => setServerPort(event.target.value)} />
+                </label>
+                <label className="flex items-center gap-2 text-sm">
+                  <input type="checkbox" checked={showNews} onChange={(event) => setShowNews(event.target.checked)} />
+                  Ana sayfada haberleri göster
+                </label>
+              </div>
               {/* Announcement */}
               <div>
                 <label className="block text-xs font-semibold text-purple-200 mb-1.5">
@@ -453,6 +433,7 @@ export default function SecureAdminPage() {
                   {isSubmitting ? "Kaydediliyor..." : "Ayarları Kaydet"}
                 </button>
 
+                {settingsError && <span role="alert" className="text-sm text-[var(--danger)]">{settingsError}</span>}
                 {settingsSaved && (
                   <span className="text-xs font-semibold text-emerald-400 animate-in fade-in">
                     ✔ Ayarlar başarıyla güncellendi!
@@ -464,6 +445,9 @@ export default function SecureAdminPage() {
         )}
 
         {/* ── TAB 2: KULLANICILAR ─────────────────────────────────────────── */}
+        {activeTab === "packages" && <AdminPackages />}
+
+        {activeTab === "users" && usersError && <p role="alert">{usersError}</p>}
         {activeTab === "users" && (
           <div className="glass-panel rounded-3xl p-6 border border-purple-500/25">
             <div className="flex items-center justify-between mb-6 pb-4 border-b border-purple-500/15">
@@ -748,6 +732,7 @@ export default function SecureAdminPage() {
             )}
           </div>
         )}
+        </div>
       </div>
     </div>
   );

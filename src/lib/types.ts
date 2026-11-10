@@ -61,6 +61,10 @@ export interface CreditLoad {
 }
 
 export interface SiteSettings {
+  siteName?: string;
+  backgroundImage?: string;
+  panelOpacity?: number;
+  showNews?: boolean;
   showRecentRegistrations: boolean;
   showRecentCredits: boolean;
   announcement: string;

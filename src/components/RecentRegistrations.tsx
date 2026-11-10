@@ -19,9 +19,9 @@ export default function RecentRegistrations() {
   }
 
   return (
-    <ul className="flex flex-wrap gap-3">
+    <ul className="grid grid-cols-1 gap-x-6 min-[440px]:grid-cols-2 md:grid-cols-4">
       {recent.map((u) => (
-        <li key={u.id} className="notch flex items-center gap-3 bg-[var(--surface-2)] pr-5">
+        <li key={u.id} className="flex min-w-0 items-center gap-3 border-t border-white/15 px-2 py-3">
           <img
             src={`https://mc-heads.net/avatar/${encodeURIComponent(u.username)}/64`}
             alt=""
@@ -32,8 +32,8 @@ export default function RecentRegistrations() {
               e.currentTarget.style.visibility = "hidden";
             }}
           />
-          <span>
-            <span className="block font-bold leading-tight">{u.username}</span>
+          <span className="min-w-0">
+            <span className="block truncate font-bold leading-tight">{u.username}</span>
             <span className="block text-xs text-[var(--muted)]">
               {new Date(u.createdAt || u.registeredAt || 0).toLocaleDateString("tr-TR", { day: "numeric", month: "short" })}
             </span>

@@ -14,24 +14,16 @@ export async function POST(request: Request) {
     }
 
     const { packageId } = await request.json();
-    if (!packageId) {
+    if (typeof packageId !== "string" || !packageId) {
       return NextResponse.json(
         { error: 'Lütfen bir paket seçiniz.' },
         { status: 400 }
       );
     }
 
-    // Find package from DB or fallback
-    let pkg = await prisma.coinPackage.findUnique({
-      where: { id: packageId },
+    const pkg = await prisma.coinPackage.findUnique({
+      where: { id: packageId, active: true },
     });
-
-    if (!pkg) {
-      // Fallback search by id/name
-      pkg = await prisma.coinPackage.findFirst({
-        where: { id: packageId },
-      });
-    }
 
     if (!pkg) {
       return NextResponse.json(

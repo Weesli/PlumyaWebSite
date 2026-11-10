@@ -45,7 +45,7 @@ export default function NewsCard({ news, index = 0, variant = "compact" }: NewsC
     <>
       <article
         onClick={() => setOpen(true)}
-        className={`group notch cursor-pointer bg-[var(--surface)] hover:bg-[var(--surface-2)] transition-colors ${
+        className={`plumya-panel group cursor-pointer overflow-hidden ${
           feature ? "grid md:grid-cols-[1.25fr_1fr]" : "grid grid-cols-[132px_1fr] sm:grid-cols-[180px_1fr]"
         }`}
       >

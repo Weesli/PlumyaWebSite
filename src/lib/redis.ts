@@ -9,7 +9,9 @@ function createRedisClient() {
   const client = new Redis(redisUrl, {
     lazyConnect: true,
     maxRetriesPerRequest: 1,
-    enableOfflineQueue: false,
+    connectTimeout: 1500,
+    commandTimeout: 2500,
+    enableOfflineQueue: true,
     retryStrategy(times) {
       if (times > 3) return null; // Sunucuya ulaşılamıyorsa sonsuz denemeyi durdur
       return Math.min(times * 300, 2000);
@@ -46,16 +48,7 @@ export async function publishCreditUpdate(
       type,
     });
 
-    if (redis.status !== 'ready' && redis.status !== 'connecting') {
-      await redis.connect().catch(() => {});
-    }
-
-    if (redis.status === 'ready') {
-      await redis.publish(channel, payload);
-      console.log(`✔ [Redis Pub/Sub] ${player} için ${type} ${amount} kredi güncellemesi gönderildi.`);
-    } else {
-      console.warn(`[Redis] Redis şu anda çevrimdışı, oyun içi anlık bildirim iletilemedi (Bakiye DB'ye kaydedildi).`);
-    }
+    await redis.publish(channel, payload);
   } catch (error) {
     console.warn('[Redis] Mesaj gönderilemedi (İşlem devam etti):', error);
   }

@@ -127,6 +127,13 @@ function MarketContent() {
 
         {/* Package Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-12">
+          {coinPackages.length === 0 && (
+            <div className="col-span-full py-16 text-center glass-panel rounded-xl">
+              <Coins className="w-10 h-10 text-amber-400 mx-auto mb-3 opacity-60" />
+              <p className="text-zinc-300 font-medium">Henüz satışta olan bir paket bulunmuyor.</p>
+              <p className="text-xs text-zinc-500 mt-1">Daha sonra tekrar kontrol edebilirsiniz.</p>
+            </div>
+          )}
           {coinPackages.map((pkg) => {
             const isLoading = loadingPkgId === pkg.id;
 

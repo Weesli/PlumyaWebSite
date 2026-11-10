@@ -57,19 +57,28 @@ export default function SupportPage() {
     ? tickets
     : tickets.filter((t) => t.userId === currentUser.id);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const runTicketAction = async (action: () => void | Promise<void>) => {
+    try {
+      await action();
+      return true;
+    } catch (error) {
+      alert(error instanceof Error ? error.message : "İşlem tamamlanamadı.");
+      return false;
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!subject.trim() || !message.trim()) return;
-    addTicket({ subject: subject.trim(), message: message.trim() });
+    if (!(await runTicketAction(() => addTicket({ subject: subject.trim(), message: message.trim() })))) return;
     setSubject("");
     setMessage("");
     setShowForm(false);
   };
 
-  const handleReply = (ticketId: string) => {
+  const handleReply = async (ticketId: string) => {
     if (!replyText.trim()) return;
-    addTicketReply(ticketId, replyText.trim());
-    setReplyText("");
+    if (await runTicketAction(() => addTicketReply(ticketId, replyText.trim()))) setReplyText("");
   };
 
   const statusBadge = (status: string) => {
@@ -301,7 +310,7 @@ export default function SupportPage() {
                         {(["open", "answered", "closed"] as const).map((st) => (
                           <button
                             key={st}
-                            onClick={() => updateTicketStatus(ticket.id, st)}
+                            onClick={() => runTicketAction(() => updateTicketStatus(ticket.id, st))}
                             className={`text-xs px-2.5 py-1 rounded font-medium transition-all cursor-pointer ${
                               ticket.status === st
                                 ? "bg-purple-600 text-white"

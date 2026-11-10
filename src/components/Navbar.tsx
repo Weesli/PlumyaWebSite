@@ -15,18 +15,20 @@ const navLinks = [
 ];
 
 export default function Navbar() {
-  const { currentUser, logout } = useApp();
+  const { currentUser, logout, settings } = useApp();
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
   const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
+
+  if (pathname === "/yonetim-plumya") return null;
 
   return (
     <header className="sticky top-0 z-40 bg-[var(--bg)]">
       <nav className="wrap flex items-center justify-between h-[68px] gap-6" aria-label="Ana menü">
         <Link href="/" className="flex items-center gap-2.5 shrink-0" aria-label="Plumya ana sayfa">
           <Logo size={32} />
-          <span className="font-display text-2xl font-semibold">Plumya</span>
+          <span className="font-display text-2xl font-semibold truncate max-w-[120px] lg:max-w-[220px]">{settings.siteName && settings.siteName !== "Plumya Network" ? settings.siteName : "Plumya"}</span>
         </Link>
 
         <ul className="hidden md:flex items-stretch h-full">

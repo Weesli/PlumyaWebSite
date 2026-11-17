@@ -4,8 +4,7 @@ import type { Metadata } from "next";
 import { Pixelify_Sans, Figtree } from "next/font/google";
 import "./globals.css";
 import { AppProvider } from "@/contexts/AppContext";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import SiteShell from "@/components/SiteShell";
 
 const display = Pixelify_Sans({
   variable: "--font-display",
@@ -19,7 +18,7 @@ const body = Figtree({
 
 export const metadata: Metadata = {
   title: "Plumya Network • Minecraft Sunucusu",
-  description: "Plumya Minecraft Network — 1.20+ Java & Bedrock destekli emek Survival ve SkyBlock topluluk sunucusu.",
+  description: "Plumya Minecraft Network — 1.20+ Java & Bedrock destekli emek Skyblock topluluk sunucusu.",
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
@@ -29,9 +28,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang="tr" className={`${display.variable} ${body.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
         <AppProvider initialData={initialData}>
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer />
+          <SiteShell>{children}</SiteShell>
         </AppProvider>
       </body>
     </html>

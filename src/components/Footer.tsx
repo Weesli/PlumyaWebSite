@@ -30,7 +30,7 @@ export default function Footer() {
   const head = "font-display text-xl font-semibold mb-4";
   const link = "text-[var(--muted)] hover:text-[var(--ink)] transition-colors";
 
-  if (pathname === "/yonetim-plumya") return null;
+  if (pathname === "/" || pathname === "/yonetim-plumya") return null;
 
   return (
     <footer className="bg-[var(--surface)] overflow-hidden">

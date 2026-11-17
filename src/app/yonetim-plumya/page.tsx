@@ -240,10 +240,10 @@ export default function SecureAdminPage() {
   ] as const;
 
   return (
-    <div className="min-h-dvh bg-[var(--bg)] lg:grid lg:grid-cols-[232px_minmax(0,1fr)]">
+    <div className="atlas-admin min-h-dvh bg-[var(--bg)] lg:grid lg:grid-cols-[232px_minmax(0,1fr)]">
       <aside className="bg-[var(--surface)] border-b lg:border-b-0 lg:border-r border-white/10 lg:sticky lg:top-0 lg:h-dvh flex flex-col">
         <div className="flex items-center gap-3 px-5 py-5 lg:py-7">
-          <ShieldCheck size={22} className="shrink-0 text-[var(--accent)]" />
+          <img src="/plumya-wiki-logo.png" width={40} height={40} alt="Plumya logosu" className="shrink-0" />
           <div className="min-w-0">
             <p className="truncate font-display text-xl text-[var(--blossom)]">{settings.siteName || "Plumya Network"}</p>
             <p className="text-xs text-[var(--muted)]">Yönetim merkezi</p>

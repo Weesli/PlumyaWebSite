@@ -21,7 +21,7 @@ export default function Navbar() {
 
   const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
-  if (pathname === "/yonetim-plumya") return null;
+  if (pathname === "/" || pathname === "/yonetim-plumya") return null;
 
   return (
     <header className="sticky top-0 z-40 bg-[var(--bg)]">

@@ -395,3 +395,483 @@ details > summary::-webkit-details-marker { display: none; }
     margin-top: 0;
   }
 }
+
+/* World-inspired surfaces pair dark timber with pale parchment content. */
+.plumya-panel {
+  border: 1px solid rgb(233 193 162 / 22%);
+  border-radius: 10px;
+  box-shadow: inset 0 1px rgb(255 235 211 / 8%), 0 8px 24px rgb(9 5 12 / 16%);
+}
+
+.plumya-hero {
+  min-height: clamp(400px, 43vw, 610px);
+}
+
+.plumya-hero h1 {
+  font-size: clamp(44px, 8vw, 112px);
+  text-shadow: 0 4px 0 #48182e, 0 10px 26px #130c17;
+}
+
+.plumya-hero-details {
+  margin-top: 42px;
+}
+
+.plumya-news {
+  margin-top: 12px;
+  background: #dfcfb4;
+  color: #34251f;
+  border: 1px solid #a88a68;
+  border-radius: 12px;
+  padding: 28px;
+  box-shadow: 0 12px 40px rgb(8 4 10 / 22%), inset 0 0 0 5px rgb(100 68 44 / 8%);
+}
+
+.plumya-news > div:first-child {
+  margin-bottom: 24px;
+}
+
+.plumya-news > div:first-child button {
+  color: #87334d;
+}
+
+.plumya-news .plumya-panel {
+  --muted: #68544a;
+  background: #efe1ca;
+  color: #34251f;
+  border-color: #bba183;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.plumya-news .plumya-panel p:first-child {
+  color: #87334d;
+}
+
+.plumya-news .plumya-panel button {
+  color: #49322b;
+}
+
+.plumya-community {
+  margin-top: 40px;
+  background: rgb(32 21 27 / 94%);
+  border: 1px solid rgb(233 193 162 / 24%);
+  border-radius: 12px;
+  padding: 28px;
+}
+
+.plumya-community h2,
+.plumya-community h3 {
+  color: #efc7ad;
+}
+
+.plumya-community .plumya-reading-panel {
+  background: #30232c;
+  border-top: 3px solid #8e5264;
+}
+
+@media (max-width: 639px) {
+  .plumya-news,
+  .plumya-community {
+    width: calc(100% - 24px);
+    padding: 20px 16px;
+  }
+}
+
+/* Illustrated parchment atlas landing page. */
+body:has(.atlas-home) { background:#f3e7d2; color:#28281f; }
+body:has(.atlas-home) .plumya-site::before { display:none; }
+.atlas-home { --atlas-plum:#79385f; --atlas-green:#29422b; font:15px/1.5 var(--font-body),sans-serif; min-height:100dvh; background:radial-gradient(ellipse at 50% 0%,#fffcf3aa,transparent 65%),repeating-linear-gradient(24deg,#80604704 0 1px,transparent 1px 4px),#f3e7d2; }
+.atlas-home h1,.atlas-home h2,.atlas-home h3,.atlas-brand,.atlas-nav { font-family:Georgia,"Times New Roman",serif; }
+.atlas-home a,.atlas-home button { transition:background .2s,color .2s,transform .2s; }
+.atlas-home a:focus-visible,.atlas-home button:focus-visible { outline:3px solid #79385f; outline-offset:4px; }
+.atlas-sidebar { width:196px; position:fixed; inset:0 auto 0 0; z-index:30; border-right:1px solid #aa92795c; background:#f6ecd8; display:flex; flex-direction:column; overflow:hidden; box-shadow:5px 0 20px #5d45200a; }
+.atlas-brand { padding-top:26px; display:flex; align-items:center; flex-direction:column; color:#193420; line-height:1.05; }
+.atlas-brand strong { font-size:33px; margin-top:10px; letter-spacing:-1px; }
+.atlas-brand span { font-size:21px; font-weight:bold; }
+.atlas-rule { margin:20px 30px;color:#8b7354;text-align:center; border-bottom:1px solid #ac9577;line-height:0; }
+.atlas-nav { display:flex; align-items:center; gap:17px; padding:13px 22px; margin:5px 10px; font-size:18px; font-weight:bold; color:#533c28; }
+.atlas-nav svg {flex-shrink:0;stroke-width:1.5}
+.atlas-nav.active { background:#79385f;color:#fff7e9;border-radius:3px;box-shadow:0 3px 0 #52263e; }
+.atlas-nav.active svg:last-child {margin-left:auto;width:17px}
+.atlas-nav:hover {background:#79385f18}
+.atlas-nav.active:hover {background:#64304f}
+.atlas-sidebar-scene {flex:1;min-height:180px;background:url("/plumya-world.webp") 5% 85% / auto 420px no-repeat;mix-blend-mode:multiply;mask-image:linear-gradient(transparent,#000 20%);}
+.atlas-help {display:flex;gap:9px;align-items:center;padding:15px 22px;color:#624c36;font-size:13px}
+.atlas-content {margin-left:196px;padding:0 24px 0 36px;max-width:1920px;}
+.atlas-topbar {height:65px;display:flex;align-items:center;justify-content:flex-end;gap:26px;color:#233423}
+.atlas-account {display:flex;align-items:center;gap:8px;border:1px solid #75455b;border-radius:9px;padding:8px 17px;font-weight:700;color:#34261f;}
+.atlas-opening {display:grid;grid-template-columns:minmax(0,1fr) 355px;gap:22px}
+.atlas-hero {position:relative;min-height:530px;isolation:isolate;scroll-margin-top:20px;}
+.atlas-world {object-fit:contain;object-position:right center;mix-blend-mode:multiply;z-index:-1;padding-left:170px;}
+.atlas-intro {position:relative;max-width:360px;padding-top:4px;pointer-events:none;}
+.atlas-intro a {pointer-events:auto;}
+.atlas-eyebrow {font:bold 12px Georgia,serif;letter-spacing:2px;color:#573622;margin-bottom:23px;}
+.atlas-hero h1 {color:#233d27;font-size:clamp(25px,2.5vw,40px);line-height:1.06;letter-spacing:-1.4px;}
+.atlas-hero h1 strong {font-size:clamp(43px,4.1vw,68px);font-weight:700;}
+.atlas-hero h1 em {color:#79385f;line-height:1.13}
+.atlas-description {max-width:222px;margin-top:20px;line-height:1.5;color:#302e24;}
+.atlas-actions {display:flex;gap:10px;margin-top:27px;align-items:center;}
+.atlas-play {display:flex;gap:10px;align-items:center;background:#314d30;color:#fffdf1;padding:12px 19px;border:1px solid #274026;border-radius:6px;box-shadow:inset 0 1px #ffffff25,0 3px 6px #543a2220;font-weight:700;}
+.atlas-play:hover {background:#203c23;}
+.atlas-book {padding:12px;background:#fff8e9;border:1px solid #d4c0a5;border-radius:6px;}
+.atlas-map-label {position:absolute;display:flex;align-items:center;gap:8px;background:#f9edd4;border:2px solid #b89460;box-shadow:0 3px 6px #5a3c2725;padding:6px 13px;font:bold 16px Georgia,serif;color:#302d20;}
+.atlas-map-label.survival {top:6%;left:48%;transform:rotate(-2deg)}
+.atlas-map-label.skyblock {top:39%;right:0;transform:rotate(2deg)}
+.atlas-map-label.events {bottom:14%;left:53%;transform:rotate(-2deg)}
+.atlas-compass {position:absolute;right:0;bottom:4%;display:flex;align-items:center;flex-direction:column;font:12px Georgia,serif;color:#85714f;line-height:1;}
+.atlas-compass span {font-size:66px;}
+.atlas-right {display:flex;flex-direction:column;gap:12px;padding-top:5px;}
+.atlas-status {background:#30472e;border:1px solid #243d28;color:#fff9e7;padding:13px 16px 7px;border-radius:12px;box-shadow:0 3px 9px #6c503d20;font-size:13px;}
+.atlas-status>div {display:flex;align-items:center;gap:7px;white-space:nowrap}
+.atlas-dot {width:9px;height:9px;background:#d9bb7a;border-radius:50%;flex-shrink:0}
+.atlas-dot.online {background:#3fe455}
+.atlas-capacity {margin-left:auto;font-size:12px}
+.atlas-status button {display:flex;align-items:center;gap:10px;width:100%;border-radius:7px;background:#e2e0c9;color:#20291d;margin-top:11px;padding:8px 10px;cursor:pointer}
+.atlas-status button strong {flex:1;text-align:left;overflow-wrap:anywhere}
+.atlas-copy-status {display:block;font-size:11px;min-height:10px}
+.atlas-paper {background:#fff6e9aa;border:1px solid #dec5a6;border-radius:13px;padding:12px 18px;box-shadow:0 3px 7px #92654320;}
+.atlas-card-heading {display:flex;align-items:center;justify-content:space-between;gap:7px;margin-bottom:9px}
+.atlas-card-heading h2 {font-size:20px;font-weight:700;letter-spacing:-.6px;line-height:1.2}
+.atlas-card-heading a {display:flex;align-items:center;gap:4px;font-size:11px;white-space:nowrap;color:#654730}
+.atlas-news-open {display:block;width:100%;text-align:left;position:relative;padding-bottom:0;cursor:pointer}
+.atlas-news-open>img {width:100%;height:116px;object-fit:cover;object-position:center 58%;border-radius:6px}
+.atlas-news-open h3 {font-size:20px;font-weight:bold;margin-top:7px;line-height:1.15}
+.atlas-news-open p {font-size:13px;padding-right:30px;margin-top:4px;line-height:1.4}
+.atlas-arrow {position:absolute;bottom:2px;right:0;border:1px solid #a38e72;border-radius:5px;padding:4px}
+.atlas-ranking li {display:flex;align-items:center;gap:8px;border-bottom:1px solid #d8c6ac;padding:8px 0;font-size:13px}
+.atlas-ranking li:last-child {border:0}
+.atlas-ranking li>svg {color:#ba892e;flex-shrink:0}
+.atlas-ranking li strong {flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.atlas-ranking li>span:last-child {font-size:11px}
+.atlas-empty {font-size:13px;padding:15px 0;color:#68533e}
+.atlas-worlds {border-top:1px solid #b8a185;margin-top:16px;padding-top:13px;}
+.atlas-section-heading {display:flex;align-items:center;justify-content:space-between;gap:25px;}
+.atlas-section-heading h2 {font-size:clamp(25px,2.5vw,40px);font-weight:bold;color:#29422b;letter-spacing:-1px}
+.atlas-section-heading h2 em {color:#79385f;margin-right:9px}
+.atlas-section-heading p {font-size:12px;max-width:360px}
+.atlas-modes {display:grid;grid-template-columns:1fr 1fr .4fr;gap:23px;margin-top:26px;align-items:center;padding-bottom:28px;}
+.atlas-mode {display:grid;grid-template-columns:1.35fr 1fr;align-items:center;min-width:0}
+.atlas-mode-image {height:203px;background-image:url("/plumya-world.webp");border:7px solid #fff5df;box-shadow:0 3px 10px #76513738;transform:rotate(-3deg);background-size:660px auto;}
+.atlas-mode-image.village {background-position:8% 70%}
+.atlas-mode-image.island {background-position:85% 30%;transform:rotate(3deg)}
+.atlas-note {background:#faeed8;border:1px solid #d5ba93;padding:17px 17px 38px;position:relative;box-shadow:0 5px 10px #67452520;transform:rotate(2deg);margin-left:-24px;min-height:165px;}
+.atlas-note>svg {display:inline;vertical-align:middle;color:#725234}
+.atlas-note h3 {display:inline;font-size:22px;line-height:1.1;font-weight:bold;margin-left:8px;}
+.atlas-note p {margin-top:11px;font-size:13px;line-height:1.45}
+.atlas-note a {position:absolute;right:13px;bottom:10px;padding:3px;border:1px solid #a38e72;border-radius:5px}
+.atlas-other {margin-left:0;transform:rotate(-3deg)}
+.atlas-all-news {border-top:1px solid #b8a185;padding-block:24px;}
+.atlas-all-news>h2 {font-size:28px;color:#29422b;margin-bottom:20px}
+.atlas-all-news>div {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.atlas-all-news .plumya-panel {--muted:#61513f;background:#fff5e3;color:#342b20;border-color:#d5ba93;backdrop-filter:none}
+.atlas-all-news .plumya-panel button {color:#593647}
+.atlas-all-news .plumya-panel p:first-child {color:#79385f}
+.atlas-footer {display:flex;gap:22px;flex-wrap:wrap;padding:18px 0;color:#6b5843;font-size:12px;border-top:1px solid #b8a185;}
+.atlas-footer span {margin-right:auto}
+.atlas-modal {position:fixed;inset:0;background:#19160ed9;z-index:60;display:grid;place-items:center;padding:20px}
+.atlas-modal article {max-width:650px;max-height:85dvh;overflow:auto;background:#f8ecd5;color:#352b20;padding:28px;}
+.atlas-modal button {float:right;cursor:pointer;color:#79385f;}
+.atlas-modal h2 {font-size:28px;margin-bottom:18px}
+.atlas-modal p {white-space:pre-line}
+@media(min-width:1600px){.atlas-opening{grid-template-columns:minmax(0,1fr) 375px}.atlas-hero{min-height:545px}.atlas-world{padding-left:160px}.atlas-description{margin-top:25px}.atlas-news-open>img{height:127px}.atlas-right{gap:13px}}
+@media(max-width:1199px){.atlas-sidebar{width:165px}.atlas-content{margin-left:165px;padding-inline:22px}.atlas-opening{grid-template-columns:minmax(0,1fr) 300px;gap:15px}.atlas-world{padding-left:95px;object-position:center bottom}.atlas-intro{max-width:310px}.atlas-hero{min-height:580px}.atlas-map-label{font-size:13px}.atlas-map-label.survival{top:49%;left:30%}.atlas-map-label.skyblock{top:65%}.atlas-map-label.events{bottom:3%;left:28%}.atlas-description{max-width:215px}.atlas-modes{grid-template-columns:1fr 1fr}.atlas-other{grid-column:1/-1;min-height:110px}.atlas-section-heading{align-items:start}.atlas-section-heading p{max-width:230px}.atlas-status>div{flex-wrap:wrap}.atlas-capacity{margin-left:16px}.atlas-card-heading{flex-wrap:wrap}}
+@media(max-width:899px){.atlas-sidebar{position:relative;width:100%;height:auto;overflow:visible;border-right:0}.atlas-brand{padding:14px;flex-direction:row;justify-content:center;gap:8px}.atlas-brand svg{width:35px;height:35px}.atlas-brand strong{margin:0;font-size:26px}.atlas-brand span{font-size:18px}.atlas-sidebar nav{display:flex;overflow-x:auto;justify-content:center;border-block:1px solid #c7b393}.atlas-nav{font-size:14px;padding:9px 12px;margin:3px;gap:7px}.atlas-nav svg{width:17px}.atlas-nav.active svg:last-child,.atlas-rule,.atlas-sidebar-scene,.atlas-help{display:none}.atlas-content{margin-left:0;padding-inline:20px}.atlas-topbar{height:58px;gap:18px}.atlas-opening{grid-template-columns:minmax(0,1fr) 290px}.atlas-hero h1{font-size:27px}.atlas-hero h1 strong{font-size:43px}.atlas-section-heading{display:block}.atlas-section-heading p{max-width:100%;margin-top:8px}}
+@media(max-width:639px){.atlas-content{padding-inline:16px}.atlas-opening{display:block}.atlas-hero{min-height:645px}.atlas-world{padding-left:0;object-position:center bottom;object-fit:contain;padding-top:290px}.atlas-intro{max-width:100%;padding-top:12px}.atlas-eyebrow{margin-bottom:15px}.atlas-hero h1{font-size:29px}.atlas-hero h1 strong{font-size:48px}.atlas-description{max-width:270px;font-size:14px;margin-top:14px}.atlas-actions{margin-top:18px}.atlas-map-label.survival{top:61%;left:5%}.atlas-map-label.skyblock{top:74%;right:0}.atlas-map-label.events{bottom:2%;left:22%}.atlas-compass{display:none}.atlas-right{display:grid;grid-template-columns:1fr}.atlas-status{margin-bottom:3px}.atlas-news-open>img{height:170px}.atlas-modes{display:block}.atlas-mode{margin-bottom:26px}.atlas-other{margin-bottom:10px;min-height:135px}.atlas-mode-image{height:190px}.atlas-all-news>div{grid-template-columns:1fr}.atlas-nav{padding:8px;gap:4px;font-size:13px}.atlas-nav svg{display:none}.atlas-topbar>a:last-child{max-width:160px;overflow:hidden;text-overflow:ellipsis}.atlas-section-heading h2{font-size:27px}.atlas-note h3{font-size:21px}}
+
+/* Shared dark timber and parchment palette across the public site. */
+body:has(.atlas-site) {background:#17151a;color:#eee1ca;}
+.atlas-site {--atlas-plum:#d297b9;--atlas-green:#c2d2ad;--ink:#eee1ca;--muted:#b7aa9d;--accent:#d297b9;--accent-hover:#e8b8d2;--surface:#272127;--surface-2:#302830;--surface-3:#3d323c;--accent-ink:#231720;color:#eee1ca;background:radial-gradient(ellipse at 50% 0%,#46362930,transparent 65%),repeating-linear-gradient(24deg,#c8ae8a03 0 1px,transparent 1px 4px),#19161b;}
+.atlas-site .atlas-sidebar {background:#211b21;border-color:#79645160;}
+.atlas-site .atlas-brand {color:#e8d8bb;}
+.atlas-site .atlas-rule {color:#ac9376;border-color:#77614d;}
+.atlas-site .atlas-nav {color:#cfbaa2;}
+.atlas-site .atlas-nav.active {background:#713c60;color:#fff0df;box-shadow:inset 0 1px #c7a58330,0 3px #382334;}
+.atlas-site .atlas-nav:hover {background:#513244;}
+.atlas-site .atlas-sidebar-scene {mix-blend-mode:normal;filter:brightness(.5) saturate(.7);mask-image:linear-gradient(transparent,#000 45%);}
+.atlas-site .atlas-help {color:#c4ae98;}
+.atlas-site .atlas-topbar {color:#dfcfb7;border-bottom:1px solid #a88b6433;margin-bottom:16px;}
+.atlas-site .atlas-account {color:#f0ddc6;border-color:#8b6680;background:#2d242c;}
+.atlas-site .atlas-balance,.atlas-admin-link {display:flex;align-items:center;gap:6px;font-size:13px;}
+.atlas-site .atlas-register {color:#e4b2cc;font-size:13px;}
+.atlas-site .atlas-logout {cursor:pointer;padding:7px;}
+.atlas-site .atlas-eyebrow {color:#d9adca;}
+.atlas-site .atlas-hero h1 {color:#dce4cc;text-shadow:0 2px 10px #17151a;}
+.atlas-site .atlas-hero h1 em {color:#d59abc;}
+.atlas-site .atlas-description {color:#d7c9b6;}
+.atlas-site .atlas-world {mix-blend-mode:normal;mask-image:radial-gradient(ellipse 52% 49% at 62% 53%,#000 38%,#000a 62%,transparent 100%);filter:brightness(.83) saturate(.9);}
+.atlas-site .atlas-book {background:#342b31;color:#ead7bc;border-color:#7b6558;}
+.atlas-site .atlas-play {background:#3f583c;border-color:#617153;color:#f7efda;}
+.atlas-site .atlas-map-label {background:#342a29;border-color:#9e8160;color:#f0ddbf;}
+.atlas-site .atlas-compass {color:#c7ad86;}
+.atlas-site .atlas-paper {background:#2c2429;border-color:#76604d;color:#efdfc7;box-shadow:0 4px 15px #0003,inset 0 1px #b6a08015;}
+.atlas-site .atlas-card-heading a {color:#d5b899;}
+.atlas-site .atlas-empty {color:#bdae9f;}
+.atlas-site .atlas-ranking li {border-color:#6a564540;}
+.atlas-site .atlas-worlds,.atlas-site .atlas-all-news,.atlas-site .atlas-footer {border-color:#8b725a60;}
+.atlas-site .atlas-section-heading h2,.atlas-site .atlas-all-news>h2 {color:#dce4cc;}
+.atlas-site .atlas-section-heading h2 em {color:#d59abc;}
+.atlas-site .atlas-mode-image {border-color:#8a7155;filter:brightness(.8);}
+.atlas-site .atlas-note {background:#342a2b;border-color:#8d7052;color:#e8d6ba;}
+.atlas-site .atlas-note>svg {color:#d3b18b;}
+.atlas-site .atlas-note a {border-color:#a38e72;color:#e8d6ba;}
+.atlas-site .atlas-all-news .plumya-panel {--muted:#bfae9e;background:#2c2429;color:#efdfc7;border-color:#76604d;}
+.atlas-site .atlas-all-news .plumya-panel button,.atlas-site .atlas-all-news .plumya-panel p:first-child {color:#e0aec9;}
+.atlas-site .atlas-footer {color:#baa68f;}
+.atlas-site .atlas-modal article {background:#2c2429;color:#efdfc7;}
+.atlas-site .atlas-modal button {color:#e0aec9;}
+.atlas-interior {min-height:70dvh;}
+.atlas-interior h1,.atlas-interior h2,.atlas-interior h3 {font-family:Georgia,"Times New Roman",serif;color:#eddbbd;letter-spacing:-.4px;}
+.atlas-interior .glass-panel,.atlas-interior .panel {border:1px solid #76604d;background:#2c2429;box-shadow:inset 0 1px #b6a08015,0 4px 15px #0002;border-radius:12px;}
+.atlas-interior .gradient-btn,.atlas-interior .btn-accent,.atlas-interior .btn-primary {clip-path:none;border:1px solid #a47695;border-radius:6px;background:#713c60;color:#fff1df;font-family:var(--font-body);box-shadow:0 3px 0 #392232;}
+.atlas-interior .text-zinc-400,.atlas-interior .text-zinc-500 {color:#bfae9f;}
+.atlas-interior .text-purple-300,.atlas-interior .text-purple-400 {color:#ddb0cd;}
+.atlas-interior input,.atlas-interior textarea,.atlas-interior select {border-radius:6px;color:#eee1ca;}
+.atlas-interior .min-h-screen {min-height:70dvh;}
+.atlas-interior .max-w-4xl,.atlas-interior .max-w-7xl {max-width:1100px;}
+.atlas-site .atlas-news-open:hover h3 {color:#e3b1ce;}
+@media(max-width:639px){.atlas-site .atlas-topbar{gap:12px;flex-wrap:wrap;height:auto;min-height:60px;padding-block:10px}.atlas-site .atlas-balance{font-size:11px}.atlas-site .atlas-hero h1{font-size:29px}.atlas-site .atlas-world{mask-image:linear-gradient(transparent 40%,#000 58%,#000 88%,transparent);}.atlas-interior>div{padding-inline:0;}}
+
+.atlas-data-section {padding-block:28px;border-top:1px solid #8b725a60;display:grid;gap:16px;}
+.atlas-data-section>h2 {font-size:30px;color:#eddbbd;}
+.atlas-data-section>p {color:#bfae9f;}
+.atlas-data-section h3 {font-size:22px;margin-bottom:12px;}
+.atlas-data-section .plumya-panel {background:#2c2429;border-color:#76604d;color:#eee1ca;}
+.atlas-data-section summary {cursor:pointer;font-weight:600;}
+.atlas-data-section details p {padding-top:12px;color:#cabaA5;}
+.atlas-data-section a {color:#e0aec9;}
+.atlas-brand>img {object-fit:contain;image-rendering:auto;}
+@media(max-width:899px){.atlas-brand>img{width:35px;height:35px}}
+
+.atlas-editorial-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:34px 28px;padding-block:30px;}
+.atlas-editorial-grid .atlas-note h3 {display:block;margin:0;font-size:21px;}
+.atlas-editorial-grid .atlas-note button {position:absolute;right:13px;bottom:10px;padding:3px;border:1px solid #a38e72;border-radius:5px;cursor:pointer;}
+.atlas-ledger {display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:22px;padding-bottom:30px;}
+.atlas-ledger h2 {font-size:22px;color:#eddbbd;}
+.atlas-ledger-row {display:flex;align-items:center;gap:10px;justify-content:space-between;border-bottom:1px solid #76604d55;padding:11px 0;font-size:13px;}
+.atlas-ledger-row:last-child {border:0;}
+.atlas-ledger-row small {display:block;color:#bfae9f;font-size:11px;}
+.atlas-ledger-row b {color:#dca5c3;}
+@media(max-width:899px){.atlas-ledger{grid-template-columns:1fr 1fr}.atlas-editorial-grid{grid-template-columns:1fr}}
+@media(max-width:639px){.atlas-ledger{grid-template-columns:1fr}}
+
+.atlas-player-head {flex-shrink:0;object-fit:contain;image-rendering:pixelated;border-radius:4px;}
+
+.atlas-wiki {padding-bottom:28px;}
+.atlas-wiki-intro {color:#bfae9f;margin-block:8px 20px;}
+.atlas-wiki .atlas-section-heading>a {color:#e0aec9;font-size:14px;}
+.atlas-wiki-links {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;}
+.atlas-wiki-links a {padding:20px;}
+.atlas-wiki-links a>div {display:flex;align-items:center;justify-content:space-between;gap:12px;color:#eed9b8;}
+.atlas-wiki-links h3 {font-size:22px;}
+.atlas-wiki-links p {font-size:13px;color:#bfae9f;margin-top:8px;}
+.atlas-wiki-links a:hover {background:#3d2c38;border-color:#b787a4;transform:translateY(-2px);}
+@media(max-width:899px){.atlas-wiki-links{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:639px){.atlas-wiki-links{grid-template-columns:1fr}}
+
+/* Admin workspace uses the public site's timber and parchment materials. */
+body:has(.atlas-admin) .plumya-site::before {display:none;}
+.atlas-admin {
+  --bg:#19161b;--surface:#272127;--surface-2:#302830;--surface-3:#3d323c;
+  --ink:#eee1ca;--muted:#bfae9f;--accent:#d297b9;--accent-hover:#e8b8d2;--blossom:#ead6b5;
+  background:repeating-linear-gradient(24deg,#c8ae8a03 0 1px,transparent 1px 4px),#19161b;
+  color:#eee1ca;font-family:var(--font-body),sans-serif;
+}
+.atlas-admin h1,.atlas-admin h2,.atlas-admin h3,.atlas-admin .font-display {
+  font-family:Georgia,"Times New Roman",serif;letter-spacing:-.4px;color:#eddbbd;
+}
+.atlas-admin>aside {background:#211b21;border-color:#79645160;}
+.atlas-admin>aside nav button {border-radius:5px;font-family:Georgia,"Times New Roman",serif;font-size:16px;}
+.atlas-admin>aside nav button[aria-current="page"] {background:#713c60;color:#fff0df;border-left-color:#d3a9be;box-shadow:inset 0 1px #c7a58330;}
+.atlas-admin header {background:#211b2180;border-color:#79645160;}
+.atlas-admin .glass-panel,.atlas-admin .panel {border:1px solid #76604d;background:#2c2429;border-radius:12px;box-shadow:0 4px 15px #0003,inset 0 1px #b6a08015;}
+.atlas-admin dl {border-color:#76604d;border-radius:10px;overflow:hidden;background:#76604d55;}
+.atlas-admin dl>div {background:#2c2429;}
+.atlas-admin input:not([type="checkbox"]):not([type="range"]),.atlas-admin textarea,.atlas-admin select {
+  background:#1e1a20;border:1px solid #77614d;color:#eee1ca;border-radius:6px;font-size:14px;padding:10px 12px;
+}
+.atlas-admin input::placeholder,.atlas-admin textarea::placeholder {color:#95877d;}
+.atlas-admin input:focus-visible,.atlas-admin textarea:focus-visible,.atlas-admin select:focus-visible {outline:2px solid #d297b9;outline-offset:2px;}
+.atlas-admin input[type="checkbox"],.atlas-admin input[type="range"] {accent-color:#bc81a6;}
+.atlas-admin label {color:#d9c7b1;}
+.atlas-admin .gradient-btn,.atlas-admin .btn-accent {font-family:var(--font-body);clip-path:none;border:1px solid #a47695;border-radius:6px;background:#713c60;color:#fff1df;box-shadow:0 3px 0 #392232;}
+.atlas-admin .gradient-btn:hover,.atlas-admin .btn-accent:hover {background:#854b72;}
+.atlas-admin .text-purple-400,.atlas-admin .text-purple-300,.atlas-admin .text-purple-200 {color:#ddb0cd;}
+.atlas-admin table {font-size:13px;}
+.atlas-admin th {background:#241e24;color:#cfbaa2;font-weight:600;padding-block:15px;}
+.atlas-admin td {border-color:#76604d40;}
+.atlas-admin tr:hover td {background:#c29d7410;}
+.atlas-admin :is(button,a) {transition:background .18s,color .18s;}
+
+/* Compact illustrated sheets continue the atlas material below the hero. */
+.atlas-site .atlas-sidebar-scene {background-repeat:no-repeat;}
+.atlas-site .atlas-wiki-links {gap:18px 24px;}
+.atlas-site .atlas-wiki-links>a {
+  border-radius:3px 12px 5px 9px;
+  border:1px solid #94755480;
+  border-top:3px solid #9f7c59;
+  background:linear-gradient(110deg,#49393255,transparent 65%),#2c2429;
+  box-shadow:3px 5px 0 #100d1230,inset 0 1px #c9b08a18;
+  padding:18px 20px;
+}
+.atlas-wiki-links>a:nth-child(3n+2) {transform:translateY(5px);}
+.atlas-site .atlas-ledger {align-items:start;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) minmax(0,1fr);gap:26px;margin-block:16px 8px;}
+.atlas-site .atlas-ledger>.atlas-paper {
+  border-radius:4px 10px 4px 8px;padding:20px;
+  border-top:3px solid #947554;
+  background:linear-gradient(100deg,#49393255,transparent 80%),#2c2429;
+  box-shadow:3px 5px 0 #100d1230,inset 0 1px #c9b08a18;
+}
+.atlas-ledger>.atlas-paper:nth-child(2) {margin-top:18px;}
+.atlas-ledger>.atlas-paper:nth-child(3) {margin-top:6px;}
+.atlas-player-row {justify-content:start;gap:12px;min-height:56px;}
+.atlas-player-row>span:not(.atlas-skin),.atlas-player-row>strong {flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;}
+.atlas-player-row b {margin-left:auto;white-space:nowrap;}
+.atlas-skin {display:inline-grid;place-items:center;width:34px;height:34px;flex-shrink:0;background:#19161b;border:1px solid #9c7d5e75;border-radius:4px;overflow:hidden;color:#d4b894;}
+.atlas-skin img {width:32px;height:32px;object-fit:contain;image-rendering:pixelated;}
+.atlas-site .atlas-data-section {grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);column-gap:44px;align-items:start;}
+.atlas-data-section>h2 {grid-column:1;grid-row:1;font-size:32px;}
+.atlas-data-section>p {grid-column:1;grid-row:2;margin-top:-6px;max-width:32ch;}
+.atlas-site .atlas-data-section>details {grid-column:2;background:transparent;border:0;border-bottom:1px solid #94755470;border-radius:0;box-shadow:none;padding:16px 0;}
+.atlas-data-section>details:first-of-type {grid-row:1;}
+.atlas-data-section>details:nth-of-type(2) {grid-row:2;}
+.atlas-data-section>details:nth-of-type(3) {grid-row:3;}
+.atlas-data-section>details:nth-of-type(4) {grid-row:4;}
+.atlas-data-section summary {font-family:Georgia,serif;font-size:18px;color:#ead6b5;list-style:revert;}
+@media(max-width:899px){.atlas-site .atlas-ledger{grid-template-columns:1fr 1fr}.atlas-site .atlas-ledger>.atlas-paper:first-child{grid-column:1/-1}.atlas-ledger>.atlas-paper:nth-child(n){margin-top:0}}
+@media(max-width:639px){.atlas-site .atlas-ledger{grid-template-columns:1fr}.atlas-site .atlas-data-section{display:block}.atlas-data-section>p{margin:12px 0 20px}.atlas-wiki-links>a:nth-child(3n+2){transform:none}}
+
+/* Illustrated guide sheets and a timber noticeboard share the map's materials. */
+.atlas-site .atlas-wiki-links {grid-template-columns:repeat(3,minmax(0,1fr));gap:30px 24px;padding:6px 0 18px;}
+.atlas-site .atlas-wiki-links>.atlas-guide-card {position:relative;display:block;padding:0 0 20px;border:0;border-radius:0;background:none;box-shadow:none;transform:none;}
+.atlas-guide-scene {height:145px;margin-right:28px;background-image:url("/plumya-world.webp");background-size:580px auto;background-position:12% 70%;border:5px solid #b9a382;transform:rotate(-2deg);box-shadow:0 5px 12px #0005;filter:brightness(.75);}
+.atlas-guide-card:nth-child(2) .atlas-guide-scene {background-position:70% 38%;transform:rotate(2deg);}
+.atlas-guide-card:nth-child(3) .atlas-guide-scene {background-position:50% 15%;}
+.atlas-guide-card:nth-child(4) .atlas-guide-scene {background-position:30% 90%;transform:rotate(1deg);}
+.atlas-guide-card:nth-child(5) .atlas-guide-scene {background-position:5% 55%;}
+.atlas-guide-card:nth-child(6) .atlas-guide-scene {background-position:65% 20%;transform:rotate(2deg);}
+.atlas-site .atlas-guide-card>.atlas-guide-caption {position:relative;display:block;margin:-34px 0 0 28px;padding:17px 35px 18px 19px;min-height:115px;background:repeating-linear-gradient(18deg,#f1d8a505 0 1px,transparent 1px 4px),#3a2d2c;border:1px solid #9e8160;box-shadow:2px 5px 8px #0004;transform:rotate(1deg);clip-path:polygon(0 2%,96% 0,100% 9%,98% 87%,100% 96%,4% 100%,0 93%,1% 19%);}
+.atlas-site .atlas-guide-caption h3 {font-size:23px;color:#efdab6;}
+.atlas-site .atlas-guide-caption p {font-size:13px;color:#cbb89e;line-height:1.4;}
+.atlas-guide-caption>svg {position:absolute;right:13px;bottom:15px;color:#d7adca;}
+.atlas-guide-card:hover .atlas-guide-scene {filter:brightness(.9);}
+.atlas-site .atlas-noticeboard {background:repeating-linear-gradient(0deg,#0002 0 2px,transparent 2px 49px),repeating-linear-gradient(3deg,#dec18e04 0 1px,transparent 1px 5px),#241c20;border:7px solid #49362b;box-shadow:inset 0 0 0 1px #947151,0 8px 20px #0003;padding:25px;gap:25px;align-items:start;}
+.atlas-site .atlas-noticeboard>.atlas-paper {border:1px solid #8b6c4f;border-radius:1px;padding:23px 20px 18px;background:repeating-linear-gradient(35deg,#d9bd9005 0 1px,transparent 1px 5px),#3a2d2c;box-shadow:2px 5px 10px #0005;position:relative;}
+.atlas-noticeboard>.atlas-paper::before {content:"";position:absolute;width:7px;height:7px;background:#c5a47b;border:1px solid #6c4f37;border-radius:50%;top:8px;left:50%;box-shadow:0 2px 2px #0005;}
+.atlas-site .atlas-noticeboard>.atlas-paper:first-child {transform:rotate(-.7deg);}
+.atlas-site .atlas-noticeboard>.atlas-paper:nth-child(2) {transform:rotate(1deg);margin-top:19px;}
+.atlas-site .atlas-noticeboard>.atlas-paper:nth-child(3) {transform:rotate(-1deg);margin-top:5px;}
+.atlas-site .atlas-noticeboard h2 {font-size:24px;}
+.atlas-site .atlas-data-section {background:#2a21256e;padding:28px;border:1px solid #8b725a60;margin-bottom:24px;}
+@media(max-width:899px){.atlas-site .atlas-wiki-links{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:639px){.atlas-site .atlas-wiki-links{grid-template-columns:1fr}.atlas-site .atlas-noticeboard{padding:16px;border-width:5px}.atlas-site .atlas-noticeboard>.atlas-paper:nth-child(n){transform:none;margin-top:0}.atlas-site .atlas-data-section{padding:20px}.atlas-guide-scene{height:175px;background-size:cover}}
+
+/* Lower content uses the same illustrated sheet construction as the wiki. */
+.atlas-site .atlas-noticeboard {
+  border:0;
+  box-shadow:none;
+  background:none;
+  padding:35px 0 18px;
+  gap:30px;
+}
+.atlas-site .atlas-noticeboard>.atlas-paper {
+  isolation:isolate;
+  margin:0 0 0 20px;
+  padding:21px 20px;
+  background:repeating-linear-gradient(18deg,#f1d8a505 0 1px,transparent 1px 4px),#3a2d2c;
+  border:1px solid #9e8160;
+  border-radius:0;
+  box-shadow:2px 5px 8px #0004;
+}
+.atlas-site .atlas-noticeboard>.atlas-paper::before {
+  content:"";
+  position:relative;
+  display:block;
+  width:calc(100% + 24px);
+  height:125px;
+  top:auto;
+  left:auto;
+  margin:-52px -6px 23px -32px;
+  border:5px solid #b9a382;
+  border-radius:0;
+  background:url("/plumya-world.webp") 12% 70% / 650px auto;
+  box-shadow:0 5px 12px #0005;
+  transform:rotate(-2deg);
+  filter:brightness(.75);
+}
+.atlas-site .atlas-noticeboard>.atlas-paper:nth-child(2) {
+  transform:rotate(.6deg);
+  margin-top:36px;
+}
+.atlas-site .atlas-noticeboard>.atlas-paper:nth-child(2)::before {
+  background-position:60% 85%;
+  transform:rotate(1.5deg);
+}
+.atlas-site .atlas-noticeboard>.atlas-paper:nth-child(3) {
+  transform:rotate(-.6deg);
+  margin-top:14px;
+}
+.atlas-site .atlas-noticeboard>.atlas-paper:nth-child(3)::before {
+  background-position:72% 28%;
+}
+.atlas-noticeboard .atlas-ledger-row {
+  border-bottom-style:dashed;
+  border-color:#a98c6260;
+}
+.atlas-site .atlas-data-section {
+  position:relative;
+  isolation:isolate;
+  margin:42px 0 30px 22px;
+  padding:30px;
+  gap:0 42px;
+  border:1px solid #9e8160;
+  background:repeating-linear-gradient(18deg,#f1d8a505 0 1px,transparent 1px 4px),#3a2d2c;
+  box-shadow:2px 5px 8px #0004;
+}
+.atlas-data-section::before {
+  content:"";
+  position:relative;
+  grid-column:1;
+  grid-row:1 / span 4;
+  align-self:end;
+  display:block;
+  height:155px;
+  margin:120px 0 -8px -48px;
+  background:url("/plumya-world.webp") 8% 64% / 600px auto;
+  border:5px solid #b9a382;
+  box-shadow:0 5px 12px #0005;
+  transform:rotate(-3deg);
+  filter:brightness(.75);
+  z-index:-1;
+}
+.atlas-site .atlas-data-section>details {
+  border-color:#a98c6260;
+  border-bottom-style:dashed;
+}
+.atlas-site .atlas-data-section>h2 {font-size:30px;}
+.atlas-site .atlas-data-section>p {max-width:30ch;}
+@media(max-width:899px){
+  .atlas-site .atlas-noticeboard>.atlas-paper:first-child {grid-column:auto;}
+  .atlas-site .atlas-noticeboard {grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media(max-width:639px){
+  .atlas-site .atlas-noticeboard {grid-template-columns:1fr;gap:44px;padding-top:30px;}
+  .atlas-site .atlas-noticeboard>.atlas-paper:nth-child(n) {margin-top:0;transform:none;}
+  .atlas-site .atlas-data-section {padding:20px;margin-left:16px;}
+  .atlas-data-section::before {height:130px;margin:-40px 6px 25px -36px;transform:rotate(-2deg);}
+}
+
+/* Each guide and community sheet has its own subject-specific scene. */
+.atlas-site .atlas-guide-scene {background-size:cover;background-position:center;}
+.atlas-guide-card:nth-child(1) .atlas-guide-scene {background-image:url("/scenes/welcome.webp");background-position:center;}
+.atlas-guide-card:nth-child(2) .atlas-guide-scene {background-image:url("/scenes/island.webp");background-position:center;}
+.atlas-guide-card:nth-child(3) .atlas-guide-scene {background-image:url("/scenes/upgrades.webp");background-position:center;}
+.atlas-guide-card:nth-child(4) .atlas-guide-scene {background-image:url("/scenes/economy.webp");background-position:center;}
+.atlas-guide-card:nth-child(5) .atlas-guide-scene {background-image:url("/scenes/commands.webp");background-position:center;}
+.atlas-guide-card:nth-child(6) .atlas-guide-scene {background-image:url("/scenes/dungeons.webp");background-position:center;}
+.atlas-site .atlas-noticeboard>.atlas-paper:has(.atlas-card-heading)::before {background-image:url("/scenes/shop.webp");background-size:cover;background-position:center;}
+.atlas-site .atlas-noticeboard>.atlas-paper:has(.atlas-player-row b)::before {background-image:url("/scenes/donations.webp");background-size:cover;background-position:center;}
+.atlas-site .atlas-noticeboard>.atlas-paper:has(.atlas-player-row>strong)::before {background-image:url("/scenes/players.webp");background-size:cover;background-position:center;}
+.atlas-site .atlas-noticeboard>.atlas-paper:nth-child(2)::before {background-image:url("/scenes/donations.webp");background-size:cover;background-position:center;}
+.atlas-site .atlas-noticeboard>.atlas-paper:nth-child(3)::before {background-image:url("/scenes/players.webp");background-size:cover;background-position:center;}
+.atlas-site .atlas-data-section::before {background-image:url("/scenes/support.webp");background-size:cover;background-position:center;}
+.atlas-site .atlas-sidebar-scene {background-image:url("/scenes/castle.webp");background-size:auto 300px;background-position:50% 100%;background-repeat:no-repeat;}
